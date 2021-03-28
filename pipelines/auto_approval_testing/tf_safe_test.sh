@@ -42,7 +42,7 @@ while IFS= read -r line; do
     resource_type=$(echo $resource_path | rev | cut -d "." -f 2 | rev)
 
     # Resources which are destroyed
-    if [[ $line == *"destroyed"* ]]; then
+    if [[ $line == *"will be destroyed"* ]]; then
 
         # If destroyed resource is always unsafe, trigger approval
         if [[ ${ResourceTypesAlwaysUnsafe[@]} =~ ${resource_type} ]]; then
@@ -63,7 +63,7 @@ while IFS= read -r line; do
     fi
 
     # Resources which are replaced
-    if [[ $line == *"replaced"* ]]; then
+    if [[ $line == *"must be replaced"* ]]; then
 
         # If replaced resource is always unsafe, trigger approval
         if [[ ${ResourceTypesAlwaysUnsafe[@]} =~ ${resource_type} ]]; then
@@ -84,7 +84,7 @@ while IFS= read -r line; do
     fi
 
     # Resources which are updated
-    if [[ $line == *"updated"* ]]; then
+    if [[ $line == *"will be updated"* ]]; then
 
         # If updated resource is always unsafe, trigger approval
         if [[ ${ResourceTypesAlwaysUnsafe[@]} =~ ${resource_type} ]]; then
@@ -106,7 +106,7 @@ while IFS= read -r line; do
     fi
 
     # Resources which are created
-    if [[ $line == *"created"* ]]; then
+    if [[ $line == *"will be created"* ]]; then
         echo "##[section]Approval not required for" $resource_path
         approvalRequired="no"
     fi
